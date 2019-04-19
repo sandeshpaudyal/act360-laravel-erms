@@ -3,14 +3,20 @@
 This is a Simple Employee management system built using laravel framework. Here you will be able to add/view/edit/delete the department and employee information under selected department. 
 
 
-Getting Started
+<b>Getting Started</b>
+<br>
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-Prerequisites
+<b>Prerequisites</b>
+<br>
 What things you need to install the software and how to install them
 
-Give examples
-Installing
+<b>Give examples<b>
+    
+    <br>
+<b>Installing<b>
+    
+    <br>
 A step by step series of examples that tell you how to get a development env running
 
 Say what the step will be
@@ -36,6 +42,6 @@ Deployment
 Add additional notes about how to deploy this on a live system
 
 Built With
-Dropwizard - The web framework used
-Maven - Dependency Management
-ROME - Used to generate RSS Feeds
+PHP - The web framework used
+Laravel - Dependency Management
+Xampp - Used to generate RSS Feeds
