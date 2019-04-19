@@ -1,4 +1,5 @@
 <b>Project Title</b>
+<br>
 This is a Simple Employee management system built using laravel framework. Here you will be able to add/view/edit/delete the department and employee information under selected department. 
 
 
