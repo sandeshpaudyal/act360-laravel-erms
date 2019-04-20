@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Kyslik\ColumnSortable\Sortable;
+
 
 class Employee extends Model
 {
@@ -20,6 +22,10 @@ class Employee extends Model
   
    ];
 
+   
+
+  public $sortable = ['name','dob','gender',"mobile_no','email','address'"];
+
    public function image()
     {
         return $this->morphMany(Image::class, 'imageable');
@@ -27,12 +33,17 @@ class Employee extends Model
 
    public function getAgeAttribute()
 	{
-	    return Carbon::parse($this->attributes['dob'])->age;
+	    return Carbon::parse($this->attributes['dob'])->age . ' years';
 	}
 
-	 public function getAzAttribute()
-	{
-	    return Carbon::parse($this->attributes['join_date'])->az;
-	}
+	 public function calculateEmployedFor($date){
+    $days = Carbon::parse($date)->diffInDays(Carbon::now());
+    $year = floor($days/365);
+    $month = floor(($days%365)/30.5);
+    $d = floor($days - ($year * 365 + $month * 30.5));
+    return $year . ' years ' . $month . ' months ' .$d . ' days';
+  }
+
+
 
 }

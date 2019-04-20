@@ -23,7 +23,7 @@ class EmployeeController extends Controller
          'name' => 'required|string',
          'dob' => 'required|date',
          'gender' => 'required|string',
-		 'mobile_no' => '',
+		 'mobile_no' => 'required|numeric|min:9',
          'email' => 'required|string',
          'address' => 'required|string',
          'department' => 'required|string',
@@ -61,7 +61,8 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-        //
+       $employee = Employee::sortable()->paginate(5);
+        return view('index',compact('employee'));
     }
 
     /**

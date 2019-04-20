@@ -12,12 +12,51 @@
 <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
 
+<!-- time out for success message -->
+<script >
+ $("document").ready(function(){
+    setTimeout(function(){
+       $("div.alert").remove();
+    }, 2000 ); // 5 secs
+
+});
+</script>
+
+<!-- search for table data using jquery -->
+
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+
+<!-- helps to keep the selected tab after page refresh using jquery -->
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+        localStorage.setItem('activeTab', $(e.target).attr('href'));
+    });
+    var activeTab = localStorage.getItem('activeTab');
+    if(activeTab){
+        $('#myTab a[href="' + activeTab + '"]').tab('show');
+    }
+});
+</script>
+
+
+
+
+
 
 
 <div class="container">
-    <div class = "row">
-
-     
+    <div class = "row">     
 
        @if ($errors->any())
       <div class="alert alert-danger">
@@ -97,6 +136,8 @@
                                             
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deletemodal-{{$department->id}}"><i class="fas fa-trash"></i></button>
 
+                                             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#showmodal-{{$department->id}}"><i class="fas fa-eye"></i></button>
+
                                            <!--  <form action="{{ route('department.destroy', $department->id)}}" method="post">
                                               @csrf
                                               @method('DELETE')
@@ -141,6 +182,80 @@
                           <button type="button" class="btn btn-sm btn-primary " data-dismiss="modal"><i class="fas fa-close"></i>  Close</button>
 
                         </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+
+                  @endforeach
+
+                     <!-- MODAL TO view DEPARTMENT -->
+
+               <!-- Modal -->
+               @foreach ($departments as $department)
+                  <div class="modal fade" id="showmodal-{{$department->id}}" role="dialog">
+                    <div class="modal-dialog">
+                    
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                         
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                         
+                        </div>
+                        <div class="modal-body">
+                          Department Title: {{$department->title}}
+
+                          <br>
+
+                          Department Description: {{$department->description}}
+
+                        </div>
+                      
+                      </div>
+                      
+                    </div>
+                  </div>
+
+                  @endforeach
+
+
+
+                   <!-- MODAL TO view EMPLOYEE -->
+
+               <!-- Modal -->
+               @foreach ($employees as $employee)
+                  <div class="modal fade" id="showmodalemp-{{$employee->id}}" role="dialog">
+                    <div class="modal-dialog">
+                    
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                         View Employee
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                         
+                        </div>
+                        <div class="modal-body col-md-12 ">
+
+                            <div class=" text-center ">
+                           @if($image = $employee->image()->first())
+                                <img src="{{asset($image->url) }}" class="" height="auto" width="50px">
+                            @endif
+                          </div>
+
+                                           <br>
+                          <b>Name:</b> {{$employee->name}}
+
+                          <br>
+
+                          <b>Age:</b> {{$employee->age}}
+
+                           <br>
+
+                          <b> Mobile No:</b> {{$employee->mobile_no}}
+
+                        </div>
+                      
                       </div>
                       
                     </div>
@@ -260,14 +375,18 @@
                                   Add Employee
                             </button>
                         </div>
+
+                        <div class = "searchbar col-md-3 ml-auto">
+                         <input id="myInput" type="text" placeholder="Search..">
+                      </div>
                                 <br><br>
 
                                 <table class="table table-hover">
                                     <tr class="text-info">
                                       
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Age</th>                                      
+                                        <th>@sortablelink('id')</th>
+                                        <th>@sortablelink('name')</th>
+                                        <th>@sortablelink('age')</th>                                      
                                         <th>Mobile</th>
                                         <th>Employed for</th>                                    
                                         <th>Department</th>
@@ -276,6 +395,7 @@
                                     </tr>
 
                                     @foreach ($employees as $employee)
+                                    <tbody id="myTable">
                                     <tr>                                       
                                         <td>
                                            {{$employee->id}}
@@ -290,7 +410,7 @@
                                            {{$employee->mobile_no}}
                                         </td>
                                          <td>
-                                             {{$employee->join_date}}
+                                             {{$employee->calculateEmployedFor($employee->join_date)}}
                                         </td>
                                         <td>
                                            {{$employee->department}}
@@ -301,12 +421,16 @@
                                            @endif
                                         </td>                                        
                                         <td>
-                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editmodal-{{$employee->id}}"><i class="fas fa-edit"></i></button>
+                                            <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#editmodalemp-{{$employee->id}}"><i class="fas fa-edit"></i></button>
                                            
-                                              <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deletemodal-{{$employee->id}}"><i class="fas fa-trash"></i></button>
+                                              <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deletemodalemp-{{$employee->id}}"><i class="fas fa-trash"></i></button>
+
+                                              <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#showmodalemp-{{$employee->id}}"><i class="fas fa-eye"></i></button>
+
 
                                         </td>
                                     </tr>
+                                  </tbody>
                                    @endforeach  
                                   
                                 </table>
@@ -317,14 +441,14 @@
 
 
              @foreach ($employees as $employee)      
-                <div id="editmodal-{{$employee->id}}" class="modal fade" role="dialog">
+                <div id="editmodalemp-{{$employee->id}}" class="modal fade" role="dialog">
                   <div class="modal-dialog">
 
                     <!-- Modal content-->
                     <div class="modal-content">
                       <div class="modal-header">
                         
-                        <h4 class="modal-title">Modal Header</h4>
+                        <h4 class="modal-title">Edit Employee</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                       </div>
                               <div class="modal-body">
@@ -360,7 +484,7 @@
 
   <!-- Modal -->
                @foreach ($employees as $employee)
-                  <div class="modal fade" id="deletemodal-{{$employee->id}}" role="dialog">
+                  <div class="modal fade" id="deletemodalemp-{{$employee->id}}" role="dialog">
                     <div class="modal-dialog">
                     
                       <!-- Modal content-->
@@ -393,8 +517,8 @@
 
     <!-- ------------------------------------------DELETE MODAL FOR EMPLOYEE ENDS HERE-------------------- -->
 
-              <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
-            </div>           
+             <!--  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+            </div>  -->          
         </nav>
     </div>  
 
