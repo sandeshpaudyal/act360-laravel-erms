@@ -9,15 +9,17 @@ You need to connect to the internet for full function of the webapp since bootst
 
   
 <h2>Deployment</h2>
-Create a database named 'erms'
-Setup .env file with the same settings and generate application key.
-Run cd/path/to/the/repo
-Run composer install
-Run php artisan migrate && php artisan db:seed && php artisan storage:link
-Now you can finally run php artisan serv
-Admin Username: admin@admin.com, Password: admin12345
+<ul>
+    <li>Create a database named 'erms'</li>
+    <li>Setup .env file with the same settings and generate application key.</li>
+    <li>Run cd/path/to/the/repo</li>
+    <li>Run composer install</li>
+    <li>Run php artisan migrate && php artisan db:seed && php artisan storage:link</li>
+    <li>Now you can finally run php artisan serv</li>
+    <li>Admin Username: admin@admin.com, Password: admin12345</li>
+</ul>
 
-<h2>Built With<h2>
+<h2>Built With</h2>
 PHP - The web framework used
 Laravel - Dependency Management
 Xampp - Used to generate RSS Feeds
