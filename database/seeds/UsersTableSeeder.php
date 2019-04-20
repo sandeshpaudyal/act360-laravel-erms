@@ -1,7 +1,7 @@
 <?php
-use Illuminate\Support\Str;
+
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
+
 class UsersTableSeeder extends Seeder
 {
     /**
@@ -11,7 +11,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-      DB::table('users')->insert([
+         DB::table('users')->insert([
         'name' => 'admin',
         'email' => 'admin@admin.com',
         'password' => bcrypt('admin12345'),
@@ -19,3 +19,4 @@ class UsersTableSeeder extends Seeder
       ]);
     }
 }
+
