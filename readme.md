@@ -21,7 +21,7 @@ You need to connect to the internet for full function of the webapp since bootst
 
 <h2>Built With</h2>
 <ul>
-    <li>PHP - The web framework used</li>
-    <li>Laravel - Dependency Management</li>
-    <li>Xampp - Used to generate RSS Feeds</li>
+    <li>PHP - Hypertext Preprocessor</li>
+    <li>Laravel - Framework for php</li>
+    <li>Xampp - cross-platform web server</li>
  </ul>
