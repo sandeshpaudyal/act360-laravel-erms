@@ -7,6 +7,7 @@ This is a Simple Employee management system built using laravel framework. Here 
 <br>
 You need to connect to the internet for full function of the webapp since bootstrapCDN, jquery have been used .
 
+<b>You need to add department before adding employee in order to choose the department for employee.<b>
   
 <h2>Deployment</h2>
 <ul>

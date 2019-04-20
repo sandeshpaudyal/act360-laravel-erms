@@ -459,7 +459,17 @@ $(document).ready(function(){
                                            <div class="form-group">  
                                               <label for="Employee name ">Employee name</label>
                                               <input type="text" class="form-control" id=""   name="name" value="{{$employee->name}}"  >                                 
-                                            </div>                               
+                                            </div>    
+
+                                            <div class="form-group">  
+                                              <label for="Employee name ">DOB</label>
+                                              <input type="text" class="form-control" id=""   name="dob" value="{{$employee->dob}}"  >                                 
+                                            </div> 
+
+                                            <div class="form-group">  
+                                              <label for="Employee name ">Email</label>
+                                              <input type="text" class="form-control" id=""   name="email" value="{{$employee->email}}"  >                                 
+                                            </div>                            
                                                                          
                                                                  
                                   
